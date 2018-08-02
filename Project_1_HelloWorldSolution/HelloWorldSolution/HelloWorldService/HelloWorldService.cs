@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,7 +22,21 @@ namespace HelloWorldService
         public string Last;
     }
 
-    class HelloWorldService
+    // Now in order to expose this interface as service contract, i need to apply
+    // attribue named 'ServiceContract' to it.
+    [ServiceContract]
+    public interface IHelloWorld
     {
+        [OperationContract]
+        string SayHello(Name person);
+    }
+
+    // Implementation of the service contract.
+    public class HelloWorldService : IHelloWorld
+    {
+        public string SayHello(Name person)
+        {
+            return string.Format("Hello {0} {1}", person.First, person.Last);
+        }
     }
 }
