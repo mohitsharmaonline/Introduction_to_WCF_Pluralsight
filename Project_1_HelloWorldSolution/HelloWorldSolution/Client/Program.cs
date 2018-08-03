@@ -11,7 +11,14 @@ namespace Client
     {
         static void Main(string[] args)
         {
-            HelloWorldClient client = new HelloWorldClient()
+            // initializing the client proxy will initialize necessary channel too.
+            HelloWorldClient client = new HelloWorldClient("NetTcpBinding_IHelloWorld");
+            Name person = new Name();
+            person.First = "Mohit";
+            person.Last = "Sharma";
+
+            Console.WriteLine(client.SayHello(person));
+            Console.ReadLine();
         }
     }
 }
