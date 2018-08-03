@@ -7,6 +7,9 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 
+// WCF service can be hosted using IIS server. For testing purposes Visual Studio 2008
+// provides a default IIS hosting.
+
 namespace HelloWorldService
 {
     // defining a new class, we are going to have a servive called Hello, that will take
