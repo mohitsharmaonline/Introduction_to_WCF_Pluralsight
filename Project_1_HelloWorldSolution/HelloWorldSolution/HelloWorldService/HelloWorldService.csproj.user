@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <StartArguments>/client:"Client.exe"</StartArguments>
+    <StartWorkingDirectory>C:\Users\mohit\Documents\Introduction_to_WCF_Pluralsight\Project_1_HelloWorldSolution\HelloWorldSolution\Client\bin\Debug\</StartWorkingDirectory>
+  </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{3D9AD99F-2412-4246-B90B-4EAA41C64699}">
