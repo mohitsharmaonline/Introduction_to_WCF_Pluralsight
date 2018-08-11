@@ -31,7 +31,16 @@ namespace EvalServiceLibrary
         List<Eval> GetEvals();
     }
 
-    class EvalService
+    public class EvalService : IEvalService
     {
+        public List<Eval> GetEvals()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SubmitEval(Eval eval)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
