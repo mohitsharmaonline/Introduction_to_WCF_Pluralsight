@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 
@@ -17,6 +18,12 @@ namespace EvalServiceLibrary
         public DateTime TimeSent;
         [DataMember]
         public string Comments;
+    }
+
+    public interface IEvalService
+    {
+        void SubmitEval(Eval eval);
+        List<Eval> GetEvals();
     }
 
     class EvalService
