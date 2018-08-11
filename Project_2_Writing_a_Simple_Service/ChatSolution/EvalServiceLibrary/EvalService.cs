@@ -31,16 +31,25 @@ namespace EvalServiceLibrary
         List<Eval> GetEvals();
     }
 
+    // At this point i need to decide what instancing mode i will use with my service.
+    // In this case i am going to use singleton
+    // InstanceContextMode.Single: This means that within a service host there will be a single
+    // instance of service running in memory, and it will be used to service all of the incoming
+    // messages.
+    [ServiceBehavior(InstanceContextMode =InstanceContextMode.Single)]
     public class EvalService : IEvalService
     {
+        // Because there will be only one instance, we can use a list of all Evals here.
+        List<Eval> evals = new List<Eval>();
+
         public List<Eval> GetEvals()
         {
-            throw new NotImplementedException();
+            return evals;
         }
 
         public void SubmitEval(Eval eval)
         {
-            throw new NotImplementedException();
+            evals.Add(eval);
         }
     }
 }
