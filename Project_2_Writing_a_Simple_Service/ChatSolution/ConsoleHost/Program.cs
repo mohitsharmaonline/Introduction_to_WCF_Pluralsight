@@ -2,6 +2,7 @@
 using EvalServiceLibrary;
 using System;
 using System.ServiceModel;
+using System.ServiceModel.Description;
 
 namespace ConsoleHost
 {
@@ -28,18 +29,30 @@ namespace ConsoleHost
             try
             {
                 host.Open();
+                PrintServiceInfo(host);
                 Console.ReadLine();
                 host.Close();
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex);
+                Console.WriteLine(ex);                
                 host.Abort();
             }
 
             // Set ConsoleHost as startup project before pressing F5
             // Use Ctrl+F5 to launch it.
-            // You need to open VS in Administrator mode, otherwise access related exceptions will be thrown.
-        }        
+            // You need to open VS in Administrator mode, otherwise access related exceptions will be thrown.            
+        }
+
+        // To verift that the service was indeed running.
+        // for more info on testing refer rtf document testing_the_service
+        static void PrintServiceInfo(ServiceHost host)
+        {
+            Console.WriteLine("{0} is up and running with these endpoints:", host.Description.ServiceType);
+            foreach(ServiceEndpoint se in host.Description.Endpoints)
+            {
+                Console.WriteLine(se.Address);
+            }
+        }
     }
 }
