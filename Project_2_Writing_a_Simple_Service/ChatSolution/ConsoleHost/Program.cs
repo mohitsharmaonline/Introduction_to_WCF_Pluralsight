@@ -33,7 +33,8 @@ namespace ConsoleHost
             }
             catch(Exception ex)
             {
-
+                Console.WriteLine(ex);
+                host.Abort();
             }
 
         }
