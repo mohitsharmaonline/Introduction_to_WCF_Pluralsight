@@ -37,6 +37,9 @@ namespace ConsoleHost
                 host.Abort();
             }
 
-        }
+            // Set ConsoleHost as startup project before pressing F5
+            // Use Ctrl+F5 to launch it.
+            // You need to open VS in Administrator mode, otherwise access related exceptions will be thrown.
+        }        
     }
 }
