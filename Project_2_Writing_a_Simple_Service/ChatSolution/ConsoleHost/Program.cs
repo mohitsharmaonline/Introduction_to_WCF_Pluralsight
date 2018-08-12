@@ -13,18 +13,18 @@ namespace ConsoleHost
             // Service host initialization.
             ServiceHost host = new ServiceHost(serviceType: typeof(EvalService));
 
-            // adding endpoints to host.
-            host.AddServiceEndpoint(implementedContract: typeof(IEvalService),
-                binding: new BasicHttpBinding(),
-                address: "http://localhost:8080/evals/basic");
+            //// adding endpoints to host.
+            //host.AddServiceEndpoint(implementedContract: typeof(IEvalService),
+            //    binding: new BasicHttpBinding(),
+            //    address: "http://localhost:8080/evals/basic");
 
-            host.AddServiceEndpoint(implementedContract: typeof(IEvalService),
-                binding: new WSHttpBinding(),
-                address: "http://localhost:8080/evals/ws");
+            //host.AddServiceEndpoint(implementedContract: typeof(IEvalService),
+            //    binding: new WSHttpBinding(),
+            //    address: "http://localhost:8080/evals/ws");
 
-            host.AddServiceEndpoint(implementedContract: typeof(IEvalService),
-                binding: new NetTcpBinding(),
-                address: "net.tcp://localhost:8081/evals");
+            //host.AddServiceEndpoint(implementedContract: typeof(IEvalService),
+            //    binding: new NetTcpBinding(),
+            //    address: "net.tcp://localhost:8081/evals");
 
             try
             {
