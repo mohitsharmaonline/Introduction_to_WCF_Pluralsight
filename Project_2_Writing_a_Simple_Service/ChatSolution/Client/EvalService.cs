@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+// Now i have all the necessary types available in my client project.
+
 namespace EvalServiceLibrary
 {
     using System.Runtime.Serialization;
