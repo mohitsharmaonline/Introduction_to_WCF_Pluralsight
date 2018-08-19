@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvalServiceLibrary", "EvalS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleHost", "ConsoleHost\ConsoleHost.csproj", "{5CBBC215-6A1F-4103-90B7-7025F44A9C2B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{1C6C07F5-672C-4C68-A1CA-42F566E9A25A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{5CBBC215-6A1F-4103-90B7-7025F44A9C2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CBBC215-6A1F-4103-90B7-7025F44A9C2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CBBC215-6A1F-4103-90B7-7025F44A9C2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C6C07F5-672C-4C68-A1CA-42F566E9A25A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C6C07F5-672C-4C68-A1CA-42F566E9A25A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C6C07F5-672C-4C68-A1CA-42F566E9A25A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C6C07F5-672C-4C68-A1CA-42F566E9A25A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
