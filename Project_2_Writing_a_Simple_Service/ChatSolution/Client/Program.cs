@@ -47,6 +47,9 @@ namespace Client
             // Remember that all channels returned by CreateChannel will automatically implement iClientChannel,
             // as well as service contract type.
             ((IClientChannel)channel).Close();
+            // Before you run the Client code for testing , set project name 'Client' as startup project,
+            // and then press Ctrl+F5 again.
+            // for output refer "Demo_Creation_using_closing_channels" rtf document.
         }
     }
 }
