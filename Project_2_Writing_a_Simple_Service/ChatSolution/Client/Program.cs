@@ -38,8 +38,12 @@ namespace Client
             // that is part of the WSDL, that's just gonna be represented as a sequence of elements. and so 
             // on the client side , the client code generator has to decide how to map that back into .net code,
             // and by default they choose to use arrays insted of Lists. But we can change that later on.
-            Eval[] evals = channel.GetEvals();
-            Console.WriteLine("Number of evals: {0}", evals.Length);
+            // Now one problem point was this array of evals instead of List of Evals at our service side
+            // implementation. We can fix it by right licking on EvalsServiceReference and selecting 
+            // "Configure Service reference" option. refer "Demo_Creation_using_closing_Channels"
+            List<Eval> evals = channel.GetEvals();
+            Console.WriteLine("Number of evals: {0}", evals.Count);
+            // run it t ensure that changes worked!
 
             // When we are done using the channel, we need to close it.
             // we csn do it by calling close() on the channel
