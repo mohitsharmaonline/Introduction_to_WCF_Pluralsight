@@ -19,8 +19,10 @@ namespace Client
         {
             // Construction of channel.
             // Take endpoint name from the config file.
+            // Just copy the name of endpoint from app.config to change the endpoint to communicate
+            // with service.
             ChannelFactory<IEvalService> cf =
-                new ChannelFactory<IEvalService>("NetNamedPipeBinding_IEvalService");
+                new ChannelFactory<IEvalService>("WSHttpBinding_IEvalService");
 
             IEvalService channel = cf.CreateChannel();
             Eval eval = new Eval();
