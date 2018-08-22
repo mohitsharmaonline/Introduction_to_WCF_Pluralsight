@@ -1,10 +1,7 @@
 ﻿using Client.EvalsServiceReference;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client
 {
@@ -21,10 +18,10 @@ namespace Client
             // Take endpoint name from the config file.
             // Just copy the name of endpoint from app.config to change the endpoint to communicate
             // with service.
-            ChannelFactory<IEvalService> cf =
-                new ChannelFactory<IEvalService>("WSHttpBinding_IEvalService");
+            ChannelFactory<IEvalServiceChannel> cf =
+                new ChannelFactory<IEvalServiceChannel>("WSHttpBinding_IEvalService");
 
-            IEvalService channel = cf.CreateChannel();
+            IEvalServiceChannel channel = cf.CreateChannel();
             Eval eval = new Eval();
             eval.Submitter = "Mohit";
             eval.TimeSent = DateTime.Now;
@@ -52,7 +49,10 @@ namespace Client
             // In order to get the operation Close, we need to cast it to 'IClientChannel' interface.
             // Remember that all channels returned by CreateChannel will automatically implement iClientChannel,
             // as well as service contract type.
-            ((IClientChannel)channel).Close();
+            // This is another problem area to cast channel to IClientChannel every time we had to use
+            // Close or Abort operations. We talked earlier about special IClintChannel derived
+            // interface to solve this problem. refer "Demo_Creation_using_closing_Channels"
+            channel.Close();
             // Before you run the Client code for testing , set project name 'Client' as startup project,
             // and then press Ctrl+F5 again.
             // for output refer "Demo_Creation_using_closing_channels" rtf document.
