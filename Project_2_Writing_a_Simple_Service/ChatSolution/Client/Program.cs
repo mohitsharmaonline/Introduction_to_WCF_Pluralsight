@@ -28,41 +28,60 @@ namespace Client
             // It will take care of building the channel for us underneath.
             // you can check functionality of this new approach by running servicehost and client, it shall be found
             // working same as before.
-                        
-            Eval eval = new Eval();
-            eval.Submitter = "Mohit";
-            eval.TimeSent = DateTime.Now;
-            eval.Comments = "I'm liking this...";
+            try
+            {
 
-            channel.SubmitEval(eval);
-            channel.SubmitEval(eval);
 
-            // Notice that in the signature here you can see that it returns and Eval array.
-            // Now on the service side, we have used List of Evals, but in the actual schema definition
-            // that is part of the WSDL, that's just gonna be represented as a sequence of elements. and so 
-            // on the client side , the client code generator has to decide how to map that back into .net code,
-            // and by default they choose to use arrays insted of Lists. But we can change that later on.
-            // Now one problem point was this array of evals instead of List of Evals at our service side
-            // implementation. We can fix it by right licking on EvalsServiceReference and selecting 
-            // "Configure Service reference" option. refer "Demo_Creation_using_closing_Channels"
-            List<Eval> evals = channel.GetEvals();
-            Console.WriteLine("Number of evals: {0}", evals.Count);
-            // run it t ensure that changes worked!
+                Eval eval = new Eval();
+                eval.Submitter = "Mohit";
+                eval.TimeSent = DateTime.Now;
+                eval.Comments = "I'm liking this...";
 
-            // When we are done using the channel, we need to close it.
-            // we csn do it by calling close() on the channel
-            // channel.Close(); we won't find this method by default available to us,
-            // because i will only see the operations made available on IEvalService,
-            // In order to get the operation Close, we need to cast it to 'IClientChannel' interface.
-            // Remember that all channels returned by CreateChannel will automatically implement iClientChannel,
-            // as well as service contract type.
-            // This is another problem area to cast channel to IClientChannel every time we had to use
-            // Close or Abort operations. We talked earlier about special IClintChannel derived
-            // interface to solve this problem. refer "Demo_Creation_using_closing_Channels"
-            channel.Close();
-            // Before you run the Client code for testing , set project name 'Client' as startup project,
-            // and then press Ctrl+F5 again.
-            // for output refer "Demo_Creation_using_closing_channels" rtf document.
+                channel.SubmitEval(eval);
+                channel.SubmitEval(eval);
+
+                // Notice that in the signature here you can see that it returns and Eval array.
+                // Now on the service side, we have used List of Evals, but in the actual schema definition
+                // that is part of the WSDL, that's just gonna be represented as a sequence of elements. and so 
+                // on the client side , the client code generator has to decide how to map that back into .net code,
+                // and by default they choose to use arrays insted of Lists. But we can change that later on.
+                // Now one problem point was this array of evals instead of List of Evals at our service side
+                // implementation. We can fix it by right licking on EvalsServiceReference and selecting 
+                // "Configure Service reference" option. refer "Demo_Creation_using_closing_Channels"
+                List<Eval> evals = channel.GetEvals();
+                Console.WriteLine("Number of evals: {0}", evals.Count);
+                // run it t ensure that changes worked!
+
+                // When we are done using the channel, we need to close it.
+                // we csn do it by calling close() on the channel
+                // channel.Close(); we won't find this method by default available to us,
+                // because i will only see the operations made available on IEvalService,
+                // In order to get the operation Close, we need to cast it to 'IClientChannel' interface.
+                // Remember that all channels returned by CreateChannel will automatically implement iClientChannel,
+                // as well as service contract type.
+                // This is another problem area to cast channel to IClientChannel every time we had to use
+                // Close or Abort operations. We talked earlier about special IClintChannel derived
+                // interface to solve this problem. refer "Demo_Creation_using_closing_Channels"
+                channel.Close();
+                // Before you run the Client code for testing , set project name 'Client' as startup project,
+                // and then press Ctrl+F5 again.
+                // for output refer "Demo_Creation_using_closing_channels" rtf document.
+            }
+            catch(FaultException fe)
+            {
+                Console.WriteLine("FaultException handler: {0}", fe.GetType());
+                channel.Abort();
+            }
+            catch(CommunicationException ce)
+            {
+                Console.WriteLine("CommunicationException handler: {0}", ce.GetType());
+                channel.Abort();
+            }
+            catch(TimeoutException te)
+            {
+                Console.WriteLine("TimeoutException handler: {0}", te.GetType());
+                channel.Abort();
+            }
         }
     }
 }

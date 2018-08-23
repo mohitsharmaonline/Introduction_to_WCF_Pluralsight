@@ -44,11 +44,18 @@ namespace EvalServiceLibrary
 
         public List<Eval> GetEvals()
         {
+            // dummy code to generate timeout exceptions.
+            System.Threading.Thread.Sleep(5000);
             return evals;
         }
 
         public void SubmitEval(Eval eval)
         {
+            // dummy code to generate FaultException.
+            if(eval.Submitter.Equals("Throw"))
+            {
+                throw new FaultException("Error within SubmitEval");
+            }
             evals.Add(eval);
         }
     }
