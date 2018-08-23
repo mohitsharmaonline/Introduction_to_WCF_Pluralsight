@@ -34,7 +34,8 @@ namespace Client
                 // Run the service by selecting ConsoleHost as Startup project and then Ctrl+F5
                 Eval eval = new Eval();
                 // Chane submitter to generate faultException
-                eval.Submitter = "Throw";
+                // Change to normal name.
+                eval.Submitter = "Mohit";
                 eval.TimeSent = DateTime.Now;
                 eval.Comments = "I'm liking this...";
                 // Run Client by selecting it as startup project and ctrl+F5
