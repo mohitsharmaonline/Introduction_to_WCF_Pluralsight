@@ -18,10 +18,17 @@ namespace Client
             // Take endpoint name from the config file.
             // Just copy the name of endpoint from app.config to change the endpoint to communicate
             // with service.
-            ChannelFactory<IEvalServiceChannel> cf =
-                new ChannelFactory<IEvalServiceChannel>("WSHttpBinding_IEvalService");
+            //ChannelFactory<IEvalServiceChannel> cf =
+            //    new ChannelFactory<IEvalServiceChannel>("WSHttpBinding_IEvalService");
+            //IEvalServiceChannel channel = cf.CreateChannel();
 
-            IEvalServiceChannel channel = cf.CreateChannel();
+            // Initialize EvalServiceClient instead.
+            EvalServiceClient channel = new EvalServiceClient(endpointConfigurationName: "WSHttpBinding_IEvalService");
+            // So with use of this proxy class we don't have need to deal with channel factories etc.
+            // It will take care of building the channel for us underneath.
+            // you can check functionality of this new approach by running servicehost and client, it shall be found
+            // working same as before.
+                        
             Eval eval = new Eval();
             eval.Submitter = "Mohit";
             eval.TimeSent = DateTime.Now;
