@@ -31,11 +31,13 @@ namespace Client
             try
             {
 
-
+                // Run the service by selecting ConsoleHost as Startup project and then Ctrl+F5
                 Eval eval = new Eval();
-                eval.Submitter = "Mohit";
+                // Chane submitter to generate faultException
+                eval.Submitter = "Throw";
                 eval.TimeSent = DateTime.Now;
                 eval.Comments = "I'm liking this...";
+                // Run Client by selecting it as startup project and ctrl+F5
 
                 channel.SubmitEval(eval);
                 channel.SubmitEval(eval);
