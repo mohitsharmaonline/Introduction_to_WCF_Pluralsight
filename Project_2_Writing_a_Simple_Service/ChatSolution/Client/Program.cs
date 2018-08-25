@@ -51,7 +51,8 @@ namespace Client
                 // Now one problem point was this array of evals instead of List of Evals at our service side
                 // implementation. We can fix it by right licking on EvalsServiceReference and selecting 
                 // "Configure Service reference" option. refer "Demo_Creation_using_closing_Channels"
-                List<Eval> evals = channel.GetEvals();
+                // this will just begin the asynchronous operation and hence won't be returning anything.
+                channel.GetEvalsAsync();
                 Console.WriteLine("Number of evals: {0}", evals.Count);
                 // run it t ensure that changes worked!
 
