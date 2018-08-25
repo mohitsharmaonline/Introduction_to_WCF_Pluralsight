@@ -71,7 +71,8 @@ namespace Client
                 // This is another problem area to cast channel to IClientChannel every time we had to use
                 // Close or Abort operations. We talked earlier about special IClintChannel derived
                 // interface to solve this problem. refer "Demo_Creation_using_closing_Channels"
-                channel.Close();
+                // convert close to abort and you will see that it immidiately shuts down on pressing enter.
+                channel.Abort();
                 // Before you run the Client code for testing , set project name 'Client' as startup project,
                 // and then press Ctrl+F5 again.
                 // for output refer "Demo_Creation_using_closing_channels" rtf document.
