@@ -3,6 +3,7 @@ using EvalServiceLibrary;
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
+using System.ServiceModel.Description;
 
 namespace Client
 {
@@ -31,6 +32,14 @@ namespace Client
             // working same as before.
             try
             {
+                // So essentially we will be asking via mex all endpoints that implements IEvalService.
+                ServiceEndpointCollection endpoints = MetadataResolver.Resolve(contract: typeof(EvalsServiceReference.IEvalService), 
+                    address: new EndpointAddress("http://localhost:8080/evals/mex"));
+
+                // after that executes, it'll download that metadata via the nex protocol, actually using a SOAP invocation,
+                // and then in the response menssage it will find that metadata, and then basically it'll build that collection of
+                // service endpoints for me automatically. Once i have those service endpoints, then i can baiscally programetically 
+                // inspect them and decide which one i want to use. In this example we will just use all of them.
 
                 // Run the service by selecting ConsoleHost as Startup project and then Ctrl+F5
                 // Now we can use the new constructor on the client side.
