@@ -11,6 +11,17 @@ namespace EvalServiceLibrary
     [DataContract]
     public class Eval
     {
+        // Start of Demo: Tool-support for reusing types.
+        // Now for this example, we have added a few constructor in the service class.
+        // and we would like to reuse these in client side too.
+        public Eval()  { }
+        public Eval(string submitter, string comments)
+        {
+            this.Submitter = submitter;
+            this.Comments = comments;
+            this.TimeSent = DateTime.Now;
+        }
+
         // I need to include each member that i use with 'DataMember'
         [DataMember]
         public string Submitter;
