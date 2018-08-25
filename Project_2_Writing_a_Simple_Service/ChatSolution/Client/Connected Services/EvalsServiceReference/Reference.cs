@@ -9,106 +9,27 @@
 //------------------------------------------------------------------------------
 
 namespace Client.EvalsServiceReference {
-    using System.Runtime.Serialization;
-    using System;
     
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Eval", Namespace="http://schemas.datacontract.org/2004/07/EvalServiceLibrary")]
-    [System.SerializableAttribute()]
-    public partial class Eval : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CommentsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string SubmitterField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime TimeSentField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Comments {
-            get {
-                return this.CommentsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CommentsField, value) != true)) {
-                    this.CommentsField = value;
-                    this.RaisePropertyChanged("Comments");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Submitter {
-            get {
-                return this.SubmitterField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SubmitterField, value) != true)) {
-                    this.SubmitterField = value;
-                    this.RaisePropertyChanged("Submitter");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime TimeSent {
-            get {
-                return this.TimeSentField;
-            }
-            set {
-                if ((this.TimeSentField.Equals(value) != true)) {
-                    this.TimeSentField = value;
-                    this.RaisePropertyChanged("TimeSent");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="EvalsServiceReference.IEvalService")]
     public interface IEvalService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEvalService/SubmitEval", ReplyAction="http://tempuri.org/IEvalService/SubmitEvalResponse")]
-        void SubmitEval(Client.EvalsServiceReference.Eval eval);
+        void SubmitEval(EvalServiceLibrary.Eval eval);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IEvalService/SubmitEval", ReplyAction="http://tempuri.org/IEvalService/SubmitEvalResponse")]
-        System.IAsyncResult BeginSubmitEval(Client.EvalsServiceReference.Eval eval, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginSubmitEval(EvalServiceLibrary.Eval eval, System.AsyncCallback callback, object asyncState);
         
         void EndSubmitEval(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEvalService/GetEvals", ReplyAction="http://tempuri.org/IEvalService/GetEvalsResponse")]
-        System.Collections.Generic.List<Client.EvalsServiceReference.Eval> GetEvals();
+        System.Collections.Generic.List<EvalServiceLibrary.Eval> GetEvals();
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IEvalService/GetEvals", ReplyAction="http://tempuri.org/IEvalService/GetEvalsResponse")]
         System.IAsyncResult BeginGetEvals(System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<Client.EvalsServiceReference.Eval> EndGetEvals(System.IAsyncResult result);
+        System.Collections.Generic.List<EvalServiceLibrary.Eval> EndGetEvals(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -126,10 +47,10 @@ namespace Client.EvalsServiceReference {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<Client.EvalsServiceReference.Eval> Result {
+        public System.Collections.Generic.List<EvalServiceLibrary.Eval> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<Client.EvalsServiceReference.Eval>)(this.results[0]));
+                return ((System.Collections.Generic.List<EvalServiceLibrary.Eval>)(this.results[0]));
             }
         }
     }
@@ -173,12 +94,12 @@ namespace Client.EvalsServiceReference {
         
         public event System.EventHandler<GetEvalsCompletedEventArgs> GetEvalsCompleted;
         
-        public void SubmitEval(Client.EvalsServiceReference.Eval eval) {
+        public void SubmitEval(EvalServiceLibrary.Eval eval) {
             base.Channel.SubmitEval(eval);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.IAsyncResult BeginSubmitEval(Client.EvalsServiceReference.Eval eval, System.AsyncCallback callback, object asyncState) {
+        public System.IAsyncResult BeginSubmitEval(EvalServiceLibrary.Eval eval, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginSubmitEval(eval, callback, asyncState);
         }
         
@@ -188,7 +109,7 @@ namespace Client.EvalsServiceReference {
         }
         
         private System.IAsyncResult OnBeginSubmitEval(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            Client.EvalsServiceReference.Eval eval = ((Client.EvalsServiceReference.Eval)(inValues[0]));
+            EvalServiceLibrary.Eval eval = ((EvalServiceLibrary.Eval)(inValues[0]));
             return this.BeginSubmitEval(eval, callback, asyncState);
         }
         
@@ -204,11 +125,11 @@ namespace Client.EvalsServiceReference {
             }
         }
         
-        public void SubmitEvalAsync(Client.EvalsServiceReference.Eval eval) {
+        public void SubmitEvalAsync(EvalServiceLibrary.Eval eval) {
             this.SubmitEvalAsync(eval, null);
         }
         
-        public void SubmitEvalAsync(Client.EvalsServiceReference.Eval eval, object userState) {
+        public void SubmitEvalAsync(EvalServiceLibrary.Eval eval, object userState) {
             if ((this.onBeginSubmitEvalDelegate == null)) {
                 this.onBeginSubmitEvalDelegate = new BeginOperationDelegate(this.OnBeginSubmitEval);
             }
@@ -222,7 +143,7 @@ namespace Client.EvalsServiceReference {
                         eval}, this.onEndSubmitEvalDelegate, this.onSubmitEvalCompletedDelegate, userState);
         }
         
-        public System.Collections.Generic.List<Client.EvalsServiceReference.Eval> GetEvals() {
+        public System.Collections.Generic.List<EvalServiceLibrary.Eval> GetEvals() {
             return base.Channel.GetEvals();
         }
         
@@ -232,7 +153,7 @@ namespace Client.EvalsServiceReference {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.Collections.Generic.List<Client.EvalsServiceReference.Eval> EndGetEvals(System.IAsyncResult result) {
+        public System.Collections.Generic.List<EvalServiceLibrary.Eval> EndGetEvals(System.IAsyncResult result) {
             return base.Channel.EndGetEvals(result);
         }
         
@@ -241,7 +162,7 @@ namespace Client.EvalsServiceReference {
         }
         
         private object[] OnEndGetEvals(System.IAsyncResult result) {
-            System.Collections.Generic.List<Client.EvalsServiceReference.Eval> retVal = this.EndGetEvals(result);
+            System.Collections.Generic.List<EvalServiceLibrary.Eval> retVal = this.EndGetEvals(result);
             return new object[] {
                     retVal};
         }

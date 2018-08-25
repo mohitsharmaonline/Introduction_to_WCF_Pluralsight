@@ -1,4 +1,5 @@
 ﻿using Client.EvalsServiceReference;
+using EvalServiceLibrary;
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
@@ -32,12 +33,11 @@ namespace Client
             {
 
                 // Run the service by selecting ConsoleHost as Startup project and then Ctrl+F5
-                Eval eval = new Eval();
+                // Now we can use the new constructor on the client side.
+                Eval eval = new Eval(submitter: "Mohit", comments: "I'm liking this...");
+                // Now we can run our serviceHost and Client to see that everything works as before.
                 // Chane submitter to generate faultException
                 // Change to normal name.
-                eval.Submitter = "Mohit";
-                eval.TimeSent = DateTime.Now;
-                eval.Comments = "I'm liking this...";
                 // Run Client by selecting it as startup project and ctrl+F5
 
                 channel.SubmitEval(eval);
