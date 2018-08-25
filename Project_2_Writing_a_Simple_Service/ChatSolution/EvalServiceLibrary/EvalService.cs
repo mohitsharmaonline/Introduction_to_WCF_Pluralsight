@@ -58,8 +58,6 @@ namespace EvalServiceLibrary
 
         public List<Eval> GetEvals()
         {
-            // dummy code to generate timeout exceptions.
-            System.Threading.Thread.Sleep(5000);
             return evals;
         }
 
