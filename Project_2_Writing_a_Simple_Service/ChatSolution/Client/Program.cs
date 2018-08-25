@@ -52,8 +52,13 @@ namespace Client
                 // implementation. We can fix it by right licking on EvalsServiceReference and selecting 
                 // "Configure Service reference" option. refer "Demo_Creation_using_closing_Channels"
                 // this will just begin the asynchronous operation and hence won't be returning anything.
+                channel.GetEvalsCompleted += Channel_GetEvalsCompleted;
                 channel.GetEvalsAsync();
-                Console.WriteLine("Number of evals: {0}", evals.Count);
+                Console.WriteLine("Waiting...");
+                // this readline will prevent console window from getting prematurely closed.
+                Console.ReadLine();
+                // Now pressing Ctrl+F5 after starting service, we can test it's working.
+                
                 // run it t ensure that changes worked!
 
                 // When we are done using the channel, we need to close it.
@@ -86,6 +91,12 @@ namespace Client
                 Console.WriteLine("TimeoutException handler: {0}", te.GetType());
                 channel.Abort();
             }
+        }
+
+        private static void Channel_GetEvalsCompleted(object sender, GetEvalsCompletedEventArgs e)
+        {
+            // I can harvest the result here.
+            Console.WriteLine("Number of evals: {0}", e.Result.Count);
         }
     }
 }
