@@ -97,14 +97,8 @@ namespace Client.EvalsServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEvalService/SubmitEval", ReplyAction="http://tempuri.org/IEvalService/SubmitEvalResponse")]
         void SubmitEval(Client.EvalsServiceReference.Eval eval);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEvalService/SubmitEval", ReplyAction="http://tempuri.org/IEvalService/SubmitEvalResponse")]
-        System.Threading.Tasks.Task SubmitEvalAsync(Client.EvalsServiceReference.Eval eval);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEvalService/GetEvals", ReplyAction="http://tempuri.org/IEvalService/GetEvalsResponse")]
         System.Collections.Generic.List<Client.EvalsServiceReference.Eval> GetEvals();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEvalService/GetEvals", ReplyAction="http://tempuri.org/IEvalService/GetEvalsResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<Client.EvalsServiceReference.Eval>> GetEvalsAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -138,16 +132,8 @@ namespace Client.EvalsServiceReference {
             base.Channel.SubmitEval(eval);
         }
         
-        public System.Threading.Tasks.Task SubmitEvalAsync(Client.EvalsServiceReference.Eval eval) {
-            return base.Channel.SubmitEvalAsync(eval);
-        }
-        
         public System.Collections.Generic.List<Client.EvalsServiceReference.Eval> GetEvals() {
             return base.Channel.GetEvals();
-        }
-        
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<Client.EvalsServiceReference.Eval>> GetEvalsAsync() {
-            return base.Channel.GetEvalsAsync();
         }
     }
 }
