@@ -97,8 +97,18 @@ namespace Client.EvalsServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEvalService/SubmitEval", ReplyAction="http://tempuri.org/IEvalService/SubmitEvalResponse")]
         void SubmitEval(Client.EvalsServiceReference.Eval eval);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IEvalService/SubmitEval", ReplyAction="http://tempuri.org/IEvalService/SubmitEvalResponse")]
+        System.IAsyncResult BeginSubmitEval(Client.EvalsServiceReference.Eval eval, System.AsyncCallback callback, object asyncState);
+        
+        void EndSubmitEval(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEvalService/GetEvals", ReplyAction="http://tempuri.org/IEvalService/GetEvalsResponse")]
         System.Collections.Generic.List<Client.EvalsServiceReference.Eval> GetEvals();
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IEvalService/GetEvals", ReplyAction="http://tempuri.org/IEvalService/GetEvalsResponse")]
+        System.IAsyncResult BeginGetEvals(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<Client.EvalsServiceReference.Eval> EndGetEvals(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -107,7 +117,38 @@ namespace Client.EvalsServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetEvalsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetEvalsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<Client.EvalsServiceReference.Eval> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<Client.EvalsServiceReference.Eval>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class EvalServiceClient : System.ServiceModel.ClientBase<Client.EvalsServiceReference.IEvalService>, Client.EvalsServiceReference.IEvalService {
+        
+        private BeginOperationDelegate onBeginSubmitEvalDelegate;
+        
+        private EndOperationDelegate onEndSubmitEvalDelegate;
+        
+        private System.Threading.SendOrPostCallback onSubmitEvalCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetEvalsDelegate;
+        
+        private EndOperationDelegate onEndGetEvalsDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetEvalsCompletedDelegate;
         
         public EvalServiceClient() {
         }
@@ -128,12 +169,105 @@ namespace Client.EvalsServiceReference {
                 base(binding, remoteAddress) {
         }
         
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> SubmitEvalCompleted;
+        
+        public event System.EventHandler<GetEvalsCompletedEventArgs> GetEvalsCompleted;
+        
         public void SubmitEval(Client.EvalsServiceReference.Eval eval) {
             base.Channel.SubmitEval(eval);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginSubmitEval(Client.EvalsServiceReference.Eval eval, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSubmitEval(eval, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public void EndSubmitEval(System.IAsyncResult result) {
+            base.Channel.EndSubmitEval(result);
+        }
+        
+        private System.IAsyncResult OnBeginSubmitEval(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            Client.EvalsServiceReference.Eval eval = ((Client.EvalsServiceReference.Eval)(inValues[0]));
+            return this.BeginSubmitEval(eval, callback, asyncState);
+        }
+        
+        private object[] OnEndSubmitEval(System.IAsyncResult result) {
+            this.EndSubmitEval(result);
+            return null;
+        }
+        
+        private void OnSubmitEvalCompleted(object state) {
+            if ((this.SubmitEvalCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SubmitEvalCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SubmitEvalAsync(Client.EvalsServiceReference.Eval eval) {
+            this.SubmitEvalAsync(eval, null);
+        }
+        
+        public void SubmitEvalAsync(Client.EvalsServiceReference.Eval eval, object userState) {
+            if ((this.onBeginSubmitEvalDelegate == null)) {
+                this.onBeginSubmitEvalDelegate = new BeginOperationDelegate(this.OnBeginSubmitEval);
+            }
+            if ((this.onEndSubmitEvalDelegate == null)) {
+                this.onEndSubmitEvalDelegate = new EndOperationDelegate(this.OnEndSubmitEval);
+            }
+            if ((this.onSubmitEvalCompletedDelegate == null)) {
+                this.onSubmitEvalCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSubmitEvalCompleted);
+            }
+            base.InvokeAsync(this.onBeginSubmitEvalDelegate, new object[] {
+                        eval}, this.onEndSubmitEvalDelegate, this.onSubmitEvalCompletedDelegate, userState);
+        }
+        
         public System.Collections.Generic.List<Client.EvalsServiceReference.Eval> GetEvals() {
             return base.Channel.GetEvals();
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginGetEvals(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetEvals(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.Collections.Generic.List<Client.EvalsServiceReference.Eval> EndGetEvals(System.IAsyncResult result) {
+            return base.Channel.EndGetEvals(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetEvals(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return this.BeginGetEvals(callback, asyncState);
+        }
+        
+        private object[] OnEndGetEvals(System.IAsyncResult result) {
+            System.Collections.Generic.List<Client.EvalsServiceReference.Eval> retVal = this.EndGetEvals(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetEvalsCompleted(object state) {
+            if ((this.GetEvalsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetEvalsCompleted(this, new GetEvalsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetEvalsAsync() {
+            this.GetEvalsAsync(null);
+        }
+        
+        public void GetEvalsAsync(object userState) {
+            if ((this.onBeginGetEvalsDelegate == null)) {
+                this.onBeginGetEvalsDelegate = new BeginOperationDelegate(this.OnBeginGetEvals);
+            }
+            if ((this.onEndGetEvalsDelegate == null)) {
+                this.onEndGetEvalsDelegate = new EndOperationDelegate(this.OnEndGetEvals);
+            }
+            if ((this.onGetEvalsCompletedDelegate == null)) {
+                this.onGetEvalsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetEvalsCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetEvalsDelegate, null, this.onEndGetEvalsDelegate, this.onGetEvalsCompletedDelegate, userState);
         }
     }
 }
