@@ -14,6 +14,9 @@ namespace EvalServiceLibrary
         // Start of Demo: Tool-support for reusing types.
         // Now for this example, we have added a few constructor in the service class.
         // and we would like to reuse these in client side too.
+        // Right now, as we have changes the Service only, client won't be having new constructors on his side.
+        // So we right now have old version of Eval type in client.
+        // refer rtf file Demo_tool_support_for_reusing_types for further information.
         public Eval()  { }
         public Eval(string submitter, string comments)
         {
