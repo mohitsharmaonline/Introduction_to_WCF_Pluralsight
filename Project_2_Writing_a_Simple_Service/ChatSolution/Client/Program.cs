@@ -5,6 +5,11 @@ using System.Collections.Generic;
 
 namespace Client
 {    
+    /****************************************************************************
+     * Each one method we are invoking here is done using SOAP behind the 
+     * scene. So, now what we need to do is to figure out how to map this 
+     * over to a more restful design.
+     * *************************************************************************/
     class Program
     {
         static void Main(string[] args)
