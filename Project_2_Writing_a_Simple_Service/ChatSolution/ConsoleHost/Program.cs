@@ -3,6 +3,7 @@ using EvalServiceLibrary;
 using System;
 using System.ServiceModel;
 using System.ServiceModel.Description;
+using System.ServiceModel.Web;
 
 namespace ConsoleHost
 {
@@ -10,7 +11,13 @@ namespace ConsoleHost
     {
         static void Main(string[] args)
         {            
-            ServiceHost host = new ServiceHost(serviceType: typeof(EvalService));
+            /*************************************************************************************
+             * With this change, it should automatically wire up those endpoints we need.
+             * Now we can run host to check. And it works like charm.
+             * In browser you can see that list of evals is getting returned as before.
+             * jump to rtf document for further info.
+             * **********************************************************************************/
+            WebServiceHost host = new WebServiceHost(serviceType: typeof(EvalService));
             
             try
             {
