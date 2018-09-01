@@ -1,89 +1,78 @@
-﻿using Client.EvalsServiceReference;
+﻿using Client.EvalServiceReference;
 using EvalServiceLibrary;
 using System;
 using System.Collections.Generic;
-using System.ServiceModel;
-using System.ServiceModel.Description;
 
 namespace Client
-{
-    // Start of Demo: Using Service References module.Refer rtf file named 'Demo_Using_Service_Reference'
-    // Start of 'Creating, using and closing channels': So our client now contains an EvalServicereference.
-    // Now we need to start using the API on the client side to constrct a channel, 
-    //and start sending messages to this service.
-    // Start Service if not already, by pressing Ctrl+F5.
+{    
     class Program
     {
         static void Main(string[] args)
         {
-            // Construction of channel.
-            // Take endpoint name from the config file.
-            // Just copy the name of endpoint from app.config to change the endpoint to communicate
-            // with service.
-            //ChannelFactory<IEvalServiceChannel> cf =
-            //    new ChannelFactory<IEvalServiceChannel>("WSHttpBinding_IEvalService");
-            //IEvalServiceChannel channel = cf.CreateChannel();
+            Console.WriteLine("*** Evaluation Client Application ***\n");
 
+            EvalServiceClient client = new EvalServiceClient("BasicHttpBinding_IEvalService");
 
-            // So with use of this proxy class we don't have need to deal with channel factories etc.
-            // It will take care of building the channel for us underneath.
-            // you can check functionality of this new approach by running servicehost and client, it shall be found
-            // working same as before.
+            Console.WriteLine("Please enter a command: ");
+            string command = Console.ReadLine();
 
-
-            // using below message to display user when exactly we are waiting to get stuff from mex.
-            Console.WriteLine("Retreiving endpoints via MEX....");
-
-            // run the completed applocation by running ServiceHost and then Client app.
-
-            // So essentially we will be asking via mex all endpoints that implements IEvalService.
-            ServiceEndpointCollection endpoints = MetadataResolver.Resolve(contract: typeof(EvalsServiceReference.IEvalService),
-                address: new EndpointAddress("http://localhost:8080/evals/mex"));
-
-            // after that executes, it'll download that metadata via the nex protocol, actually using a SOAP invocation,
-            // and then in the response menssage it will find that metadata, and then basically it'll build that collection of
-            // service endpoints for me automatically. Once i have those service endpoints, then i can baiscally programetically 
-            // inspect them and decide which one i want to use. In this example we will just use all of them.
-
-            foreach (ServiceEndpoint se in endpoints)
+            while (!command.Equals("exit"))
             {
-                // Initialize EvalServiceClient instead.
-                EvalServiceClient channel = new EvalServiceClient(binding: se.Binding, remoteAddress: se.Address);
+                switch(command)
+                {
+                    case "submit":
 
-                try
-                {
-                    Eval eval = new Eval(submitter: "Mohit", comments: "I'm liking this...");
+                        Console.WriteLine("Please enter your name:");
+                        string name = Console.ReadLine();
+                        Console.WriteLine("Please enter your comments:");
+                        string comments = Console.ReadLine();
 
-                    channel.SubmitEval(eval);
-                    channel.SubmitEval(eval);
-                                        
-                    List<EvalServiceLibrary.Eval> evals = channel.GetEvals();
-                    Console.WriteLine("Number of Evals: {0}", evals.Count);
-                    
-                    
-                    channel.Close();                    
+                        Eval eval = new Eval();
+                        eval.TimeSent = DateTime.Now;
+                        eval.Submitter = name;
+                        eval.Comments = comments;
+
+                        client.SubmitEval(eval);
+
+                        Console.WriteLine("Evaluation submitted! \n");
+                        break;
+
+                    case "get":
+                        Console.WriteLine("Please enter the eval id:");
+                        string id = Console.ReadLine();
+
+                        Eval fe = client.GetEval(id);
+                        Console.WriteLine("{0} -- {1} said: {2} (id {3}) \n", fe.TimeSent, fe.Submitter, fe.Comments, fe.Id);
+                        break;
+
+                    case "list":
+                        Console.WriteLine("Please enter the submitter name:");
+                        name = Console.ReadLine();
+
+                        List<Eval> evals = client.GetEvalBySubmitter(name);
+
+                        evals.ForEach(e => Console.WriteLine("{0} -- {1} said: {2} (id {3})", e.TimeSent, e.Submitter, e.Comments, e.Id));
+                        Console.WriteLine();
+                        break;
+
+                    case "remove":
+                        Console.WriteLine("Please enter the eval id:");
+                        id = Console.ReadLine();
+
+                        client.RemoveEval(id);
+
+                        Console.WriteLine("Evaluation {0} removed! \n", id);
+                        break;
+
+                    default:
+                        Console.WriteLine("Unsupported command.");
+                        break;
                 }
-                catch (FaultException fe)
-                {
-                    Console.WriteLine("FaultException handler: {0}", fe.GetType());
-                    channel.Abort();
-                }
-                catch (CommunicationException ce)
-                {
-                    Console.WriteLine("CommunicationException handler: {0}", ce.GetType());
-                    channel.Abort();
-                }
-                catch (TimeoutException te)
-                {
-                    Console.WriteLine("TimeoutException handler: {0}", te.GetType());
-                    channel.Abort();
-                }
+
+                Console.WriteLine("Please eneter a command: ");
+                command = Console.ReadLine();
             }
         }
-
-
-
-
     }
 }
 

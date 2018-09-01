@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 
@@ -8,7 +9,7 @@ namespace EvalServiceLibrary
     // This class will represent Evaluation.  
     // In order to use it within my servicontract, i need to annotate it
     // with 'DataContract'.
-    [DataContract]
+    [DataContract(Namespace ="http://pluralsight.com/evals")]
     public class Eval
     {
         // Start of Demo: Tool-support for reusing types.
@@ -27,11 +28,13 @@ namespace EvalServiceLibrary
 
         // I need to include each member that i use with 'DataMember'
         [DataMember]
+        public string Id;
+        [DataMember]
         public string Submitter;
         [DataMember]
         public DateTime TimeSent;
         [DataMember]
-        public string Comments;
+        public string Comments;        
     }
 
     // In order to make it an official WCF service contract, i need to annotate it with ServiceContract attribute.
@@ -41,8 +44,19 @@ namespace EvalServiceLibrary
         // For each method i want to expose , use of OperationContract attribute will be required.
         [OperationContract]
         void SubmitEval(Eval eval);
+
         [OperationContract]
-        List<Eval> GetEvals();
+        Eval GetEval(string id);
+
+        [OperationContract]
+        List<Eval> GetAllEvals();
+
+        [OperationContract]
+        List<Eval> GetEvalBySubmitter(string submitter);
+
+        [OperationContract]
+        void RemoveEval(string id);
+
     }
 
     // At this point i need to decide what instancing mode i will use with my service.
@@ -55,20 +69,39 @@ namespace EvalServiceLibrary
     {
         // Because there will be only one instance, we can use a list of all Evals here.
         List<Eval> evals = new List<Eval>();
-
-        public List<Eval> GetEvals()
-        {
-            return evals;
-        }
+        int evalCount = 0;
 
         public void SubmitEval(Eval eval)
         {
-            // dummy code to generate FaultException.
-            if(eval.Submitter.Equals("Throw"))
-            {
-                throw new FaultException("Error within SubmitEval");
-            }
+            eval.Id = (++evalCount).ToString();
             evals.Add(eval);
         }
+
+        public Eval GetEval(string id)
+        {
+            return evals.First(e => e.Id.Equals(id));
+        }
+
+        public List<Eval> GetAllEvals()
+        {
+            return this.GetEvalBySubmitter(null);
+        }        
+
+        public List<Eval> GetEvalBySubmitter(string submitter)
+        {
+            if(submitter == null || submitter.Equals(""))
+            {
+                return evals;
+            }
+            else
+            {
+                return evals.Where(e => e.Submitter.ToLower().Equals(submitter.ToLower())).ToList<Eval>();
+            }
+        }
+        
+        public void RemoveEval(string id)
+        {
+            evals.RemoveAll(e => e.Id.Equals(id));
+        }        
     }
 }
