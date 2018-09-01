@@ -12,6 +12,7 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EvalSite", "EvalSite\", "{A8FC5FCB-F541-4593-A0BB-D8ABB4B79379}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
+		ProjectReferences = "{0cf0af08-cd41-4ade-b8ad-72ba9dc3bc81}|EvalServiceLibrary.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_52308"
 		Debug.AspNetCompiler.PhysicalPath = "EvalSite\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52308\"
