@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.ServiceModel.Web;
 
 namespace EvalServiceLibrary
 {
@@ -37,25 +38,52 @@ namespace EvalServiceLibrary
         public string Comments;        
     }
 
+    /*********************************************************************************
+     * First we need to define a URI Mapping for each of these contracts
+     * *****************************************************************************/
+
     // In order to make it an official WCF service contract, i need to annotate it with ServiceContract attribute.
     [ServiceContract]
     public interface IEvalService
     {
-        // For each method i want to expose , use of OperationContract attribute will be required.
+        /*****************************************************************************************************
+         * These are going to be invoked using a GET request, so i am going to use the WebInvokeAttribute.
+         * We have mapped first one to a POST request.
+         * **************************************************************************************************/
+        [WebInvoke(Method ="POST", UriTemplate ="evals")]
         [OperationContract]
         void SubmitEval(Eval eval);
 
+        /******************************************************************************************************
+         * We have mapped input parameter id within our Uri template
+         * this template name with extend out base address already defined for service.
+         * We have added WebGet to all of these guys to make them invokable using traditional
+         * HTTP GET requests. The URI is going to determine which one is going to be called
+         * for a particular GET Request.
+         * ***************************************************************************************************/
+        [WebGet(UriTemplate="eval/{id}")]
         [OperationContract]
         Eval GetEval(string id);
 
+        [WebGet(UriTemplate="evals")]
         [OperationContract]
         List<Eval> GetAllEvals();
 
+        [WebGet(UriTemplate = "evals/{submitter}")]
         [OperationContract]
         List<Eval> GetEvalBySubmitter(string submitter);
 
+        /******************************************************************************************************
+         * Mapped this one to a DELETE request.
+         * ***************************************************************************************************/
+        [WebInvoke(Method = "DELETE", UriTemplate = "eval/{id}")]
         [OperationContract]
         void RemoveEval(string id);
+
+        /****************************************************************************************************
+         * So basically we have exposed same services as before through the standard HTTP uniform service
+         * Contracts. using GET, POST, DELETE in this case.
+         * ************************************************************************************************/
 
     }
 
