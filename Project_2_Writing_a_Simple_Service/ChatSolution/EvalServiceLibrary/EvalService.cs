@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.ServiceModel.Syndication;
 using System.ServiceModel.Web;
 
 namespace EvalServiceLibrary
@@ -85,6 +86,12 @@ namespace EvalServiceLibrary
          * Contracts. using GET, POST, DELETE in this case.
          * ************************************************************************************************/
 
+        // adding a new operation to service contract to return a syndicationfeedformatter.
+        [ServiceKnownType(typeof(Atom10FeedFormatter))]
+        [ServiceKnownType(typeof(Rss20FeedFormatter))]
+        [WebGet(UriTemplate="evals/feed/{format}")]
+        [OperationContract]
+        SyndicationFeedFormatter GetFeed(string format);
     }
 
     // At this point i need to decide what instancing mode i will use with my service.
@@ -130,6 +137,34 @@ namespace EvalServiceLibrary
         public void RemoveEval(string id)
         {
             evals.RemoveAll(e => e.Id.Equals(id));
-        }        
+        }
+
+
+        public SyndicationFeedFormatter GetFeed(string format)
+        {
+            List<Eval> evals = this.GetAllEvals();
+            SyndicationFeed feed = new SyndicationFeed()
+            {
+                Title = new TextSyndicationContent("Pluralsight Evaluations summary"),
+                Description = new TextSyndicationContent("Recent student evaluation summary"),
+                Items = from eval in evals
+                        select new SyndicationItem()
+                        {
+                            Title = new TextSyndicationContent(eval.Submitter),
+                            Content = new TextSyndicationContent(eval.Comments)
+                        }
+            };
+
+            if(format.Equals("atom"))
+            {
+                return new Atom10FeedFormatter(feed);
+            }
+            else
+            {
+                return new Rss20FeedFormatter(feed);
+            }
+
+            // Move to rtf doc Demo_Publishin_Atom_Rss_Feeds for more info.
+        }
     }
 }
