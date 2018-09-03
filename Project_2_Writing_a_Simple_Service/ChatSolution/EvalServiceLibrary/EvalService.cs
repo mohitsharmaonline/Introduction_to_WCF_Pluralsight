@@ -66,7 +66,7 @@ namespace EvalServiceLibrary
         [OperationContract]
         Eval GetEval(string id);
 
-        [WebGet(UriTemplate="evals")]
+        [WebGet(UriTemplate="evals", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         List<Eval> GetAllEvals();
 
